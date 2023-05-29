@@ -24,10 +24,15 @@ function initMap(){
                         lng: position.coords.longitude,
                     };
 
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent("現在地");
-                    infoWindow.open(map);
+                    // infoWindow.setPosition(pos);
+                    // infoWindow.setContent("現在地");
+                    // infoWindow.open(map);
                     map.setCenter(pos);
+
+                    const marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                    });
                 },
                 () => {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -49,4 +54,4 @@ function handleLocationError(browserHasGeoLocation, infoWindow, pos){
     infoWindow.open(map);
 }
 
-window.initMap = initMap();
+window.initMap = initMap;
