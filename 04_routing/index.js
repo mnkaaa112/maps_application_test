@@ -25,7 +25,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer){
             destination: {
                 query: document.getElementById("end").value,
             },
-            travelMode: google.maps.TravelMode.DRIVING,
+            travelMode: google.maps.TravelMode.WALKING,
         })
         .then((response) => {
             directionsRenderer.setDirections(response);
