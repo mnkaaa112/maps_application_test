@@ -1,5 +1,15 @@
 let pos, map, marker, geocoder, startPos, endPos;
 
+var polyLineOptions = { 
+    clickable: true,
+    strokeWeight: 5, 
+    strokeColor: "#0000ff", 
+    strokeOpacity: "0.4" 
+};
+var directionsDisplayOptions = { 
+    polylineOptions: polyLineOptions
+};
+
 function initMap(){
     //現在地を取得し表示
     if(navigator.geolocation){
@@ -26,7 +36,7 @@ function initMap(){
 
     //変数用意
     const directionsService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer();
+    const directionsRenderer = new google.maps.DirectionsRenderer(directionsDisplayOptions); 
     directionsRenderer.setMap(map);
     geocoder = new google.maps.Geocoder();
 
@@ -50,6 +60,14 @@ function initMap(){
     clearButton.type = "button";
     clearButton.value = "リセット";
     clearButton.classList.add("button", "button-secondary");
+
+    // const response = document.createElement("pre");
+    // response.id = "response";
+    // response.innerText = "";
+    
+    // const responseDiv = document.createElement("div");
+    // responseDiv.id = "response-container";
+    // responseDiv.appendChild(response);
 
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputStartPos);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputEndPos);
@@ -76,14 +94,22 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer){
     })
     .then((response) => {
         directionsRenderer.setDirections(response);
+        // directionsRenderer.addListener("click", () => {
+        //     console.log("hover");
+            // const directions = directionsRenderer.getDirections();
+        
+            // if (directions) {
+            //   computeTotalDistance(directions);
+            // }
+        //   });
         console.log(response.routes[0].legs[0].distance.text);
         console.log(response.routes[0].legs[0].duration.text);
+        response.innerText = response.routes[0].legs[0].distance.text + "," + response.routes[0].legs[0].duration.text;
     })
     .catch((e) => window.alert("Directions request failed"));
 }
 
 function clear(){
-    console.log("clear")
     document.getElementById("startPos").value = "";
     document.getElementById("endPos").value = "";
 }
