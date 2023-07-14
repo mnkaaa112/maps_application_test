@@ -112,7 +112,6 @@ function clear(){
 }
 
 function findPlaces(type){
-    console.log(pos);
     var request = {
         location: pos,
         radius: '500',
